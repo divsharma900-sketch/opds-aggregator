@@ -23,40 +23,50 @@ def root_catalog():
     title = SubElement(feed, "title")
     title.text = "Global OPDS Search"
 
-    author = SubElement(feed, "author")
-    author_name = SubElement(author, "name")
-    author_name.text = "Global OPDS"
-
-    icon = SubElement(feed, "icon")
-    icon.text = ""
-
     id_tag = SubElement(feed, "id")
     id_tag.text = "global-opds"
 
     updated = SubElement(feed, "updated")
     updated.text = "2026-01-01T00:00:00Z"
 
-    link = SubElement(feed, "link")
-    link.set("rel", "http://opds-spec.org/search")
-    link.set("type", "application/opensearchdescription+xml")
-    link.set("href", "web-production-ec95c.up.railway.app/opensearch.xml")
+    author = SubElement(feed, "author")
+    author_name = SubElement(author, "name")
+    author_name.text = "Global OPDS"
 
+    icon = SubElement(feed, "icon")
+    icon.text = "https://web-production-ec95c.up.railway.app/favicon.ico"
+
+    # SEARCH LINK
+    search_link = SubElement(feed, "link")
+    search_link.set("rel", "search")
+    search_link.set("type", "application/opensearchdescription+xml")
+    search_link.set(
+        "href",
+        "https://web-production-ec95c.up.railway.app/opensearch.xml"
+    )
+
+    # NAVIGATION ENTRY
     entry = SubElement(feed, "entry")
 
     entry_title = SubElement(entry, "title")
     entry_title.text = "Search Books"
 
     entry_id = SubElement(entry, "id")
-    entry_id.text = "search"
+    entry_id.text = "search-books"
 
-    entry_link = SubElement(entry, "link")
-    entry_link.set(
-    "href",
-    "https://web-production-ec95c.up.railway.app/search?q={searchTerms}"
+    entry_updated = SubElement(entry, "updated")
+    entry_updated.text = "2026-01-01T00:00:00Z"
+
+    content = SubElement(entry, "content")
+    content.text = "Search all catalogs"
+
+    link = SubElement(entry, "link")
+    link.set(
+        "href",
+        "https://web-production-ec95c.up.railway.app/opensearch.xml"
     )
-    entry_link.set("rel", "search")
-    entry_link.set("type", "application/atom+xml")
-
+    link.set("rel", "search")
+    link.set("type", "application/opensearchdescription+xml")
 
     xml_output = tostring(feed, encoding="utf-8")
 
