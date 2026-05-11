@@ -41,6 +41,23 @@ def root_catalog():
     link.set("type", "application/opensearchdescription+xml")
     link.set("href", "web-production-ec95c.up.railway.app/opensearch.xml")
 
+    entry = SubElement(feed, "entry")
+
+    entry_title = SubElement(entry, "title")
+    entry_title.text = "Search Books"
+
+    entry_id = SubElement(entry, "id")
+    entry_id.text = "search"
+
+    entry_link = SubElement(entry, "link")
+    entry_link.set(
+    "href",
+    "https://web-production-ec95c.up.railway.app/search?q={searchTerms}"
+    )
+    entry_link.set("rel", "search")
+    entry_link.set("type", "application/atom+xml")
+
+
     xml_output = tostring(feed, encoding="utf-8")
 
     return Response(content=xml_output, media_type="application/atom+xml")
