@@ -39,7 +39,7 @@ def root_catalog():
     link = SubElement(feed, "link")
     link.set("rel", "http://opds-spec.org/search")
     link.set("type", "application/opensearchdescription+xml")
-    link.set("href", "http://192.168.1.7:8000/opensearch.xml")
+    link.set("href", "web-production-ec95c.up.railway.app/opensearch.xml")
 
     xml_output = tostring(feed, encoding="utf-8")
 
@@ -53,7 +53,7 @@ def opensearch():
   <ShortName>Global OPDS Search</ShortName>
   <Description>Search books</Description>
   <Url type="application/atom+xml"
-       template="http://192.168.1.7:8000/search?q={{searchTerms}}" />
+       template="web-production-ec95c.up.railway.app/search?q={{searchTerms}}" />
 </OpenSearchDescription>
 '''
 
