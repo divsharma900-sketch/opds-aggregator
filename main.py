@@ -33,9 +33,6 @@ def root_catalog():
     author_name = SubElement(author, "name")
     author_name.text = "Global OPDS"
 
-    icon = SubElement(feed, "icon")
-    icon.text = "https://web-production-ec95c.up.railway.app/favicon.ico"
-
     # SEARCH LINK
     search_link = SubElement(feed, "link")
     search_link.set("rel", "search")
@@ -45,7 +42,7 @@ def root_catalog():
         "https://web-production-ec95c.up.railway.app/opensearch.xml"
     )
 
-    # NAVIGATION ENTRY
+    # ENTRY
     entry = SubElement(feed, "entry")
 
     entry_title = SubElement(entry, "title")
@@ -57,20 +54,23 @@ def root_catalog():
     entry_updated = SubElement(entry, "updated")
     entry_updated.text = "2026-01-01T00:00:00Z"
 
-    content = SubElement(entry, "content")
-    content.text = "Search all catalogs"
+    entry_content = SubElement(entry, "content")
+    entry_content.text = "Search all catalogs"
 
-    link = SubElement(entry, "link")
-    link.set(
+    entry_link = SubElement(entry, "link")
+    entry_link.set(
         "href",
         "https://web-production-ec95c.up.railway.app/opensearch.xml"
     )
-    link.set("rel", "search")
-    link.set("type", "application/opensearchdescription+xml")
+    entry_link.set("rel", "search")
+    entry_link.set("type", "application/opensearchdescription+xml")
 
     xml_output = tostring(feed, encoding="utf-8")
 
-    return Response(content=xml_output, media_type="application/atom+xml")
+    return Response(
+        content=xml_output,
+        media_type="application/atom+xml"
+    )
 
 @app.api_route("/opensearch.xml", methods=["GET", "HEAD"])
 def opensearch():
@@ -133,6 +133,15 @@ async def search(q: str):
                         author_tag = SubElement(entry, "author")
                         author_name = SubElement(author_tag, "name")
                         author_name.text = author
+
+                        entry_id = SubElement(entry, "id")
+                        entry_id.text = str(book.get("id", "unknown"))
+
+                        entry_updated = SubElement(entry, "updated")
+                        entry_updated.text = "2026-01-01T00:00:00Z"
+
+                        content = SubElement(entry, "content")
+                        content.text = book.get("title", "Unknown")
 
                         formats = book.get("formats", {})
 
