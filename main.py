@@ -75,12 +75,12 @@ def root_catalog():
 @app.api_route("/opensearch.xml", methods=["GET", "HEAD"])
 def opensearch():
 
-    xml = f'''<?xml version="1.0" encoding="UTF-8"?>
+    xml = '''<?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>Global OPDS Search</ShortName>
   <Description>Search books</Description>
   <Url type="application/atom+xml"
-       template="web-production-ec95c.up.railway.app/search?q={{searchTerms}}" />
+       template="https://web-production-ec95c.up.railway.app/search?q={searchTerms}" />
 </OpenSearchDescription>
 '''
 
@@ -151,7 +151,7 @@ async def search(q: str):
                 print(f"ERROR in {catalog['name']}")
                 print(f"Skipping failed source: {catalog['name']}")
 
-            xml_output = tostring(feed, encoding="utf-8")
-            return Response(content=xml_output, media_type="application/atom+xml")
+        xml_output = tostring(feed, encoding="utf-8")
+        return Response(content=xml_output, media_type="application/atom+xml")
 
         
