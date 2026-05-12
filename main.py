@@ -58,21 +58,27 @@ def root_catalog():
 
     xml_output = tostring(feed, encoding="utf-8")
 
-    return Response(content=xml_output, media_type="application/atom+xml")
+    return Response(content=xml_output, media_type="application/opensearchdescription+xml")
 
 @app.api_route("/opensearch.xml", methods=["GET", "HEAD"])
 def opensearch():
 
-    xml = '''<?xml version="1.0" encoding="UTF-8"?>
+    xml = """<?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-  <ShortName>Global OPDS Search</ShortName>
-  <Description>Search books</Description>
-  <Url type="application/atom+xml"
-       template="https://web-production-ec95c.up.railway.app/search?q={searchTerms}" />
-</OpenSearchDescription>
-'''
+    <ShortName>Global OPDS</ShortName>
+    <Description>Search books</Description>
 
-    return Response(content=xml, media_type="application/xml")
+    <Url
+        type="application/atom+xml"
+        template="https://web-production-ec95c.up.railway.app/search?q={searchTerms?}" />
+
+</OpenSearchDescription>
+"""
+
+    return Response(
+        content=xml,
+        media_type="application/opensearchdescription+xml"
+    )
 
 # SEARCH ENDPOINT
 @app.api_route("/search", methods=["GET", "HEAD"])
