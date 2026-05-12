@@ -21,7 +21,7 @@ def root_catalog():
     feed.set("xmlns", "http://www.w3.org/2005/Atom")
 
     title = SubElement(feed, "title")
-    title.text = "Global OPDS Search"
+    title.text = "Global OPDS"
 
     id_tag = SubElement(feed, "id")
     id_tag.text = "global-opds"
@@ -29,11 +29,6 @@ def root_catalog():
     updated = SubElement(feed, "updated")
     updated.text = "2026-01-01T00:00:00Z"
 
-    author = SubElement(feed, "author")
-    author_name = SubElement(author, "name")
-    author_name.text = "Global OPDS"
-
-    # SEARCH LINK
     search_link = SubElement(feed, "link")
     search_link.set("rel", "search")
     search_link.set("type", "application/opensearchdescription+xml")
@@ -42,7 +37,6 @@ def root_catalog():
         "https://web-production-ec95c.up.railway.app/opensearch.xml"
     )
 
-    # ENTRY
     entry = SubElement(feed, "entry")
 
     entry_title = SubElement(entry, "title")
@@ -54,9 +48,6 @@ def root_catalog():
     entry_updated = SubElement(entry, "updated")
     entry_updated.text = "2026-01-01T00:00:00Z"
 
-    entry_content = SubElement(entry, "content")
-    entry_content.text = "Search all catalogs"
-
     entry_link = SubElement(entry, "link")
     entry_link.set(
         "href",
@@ -67,10 +58,7 @@ def root_catalog():
 
     xml_output = tostring(feed, encoding="utf-8")
 
-    return Response(
-        content=xml_output,
-        media_type="application/atom+xml"
-    )
+    return Response(content=xml_output, media_type="application/atom+xml")
 
 @app.api_route("/opensearch.xml", methods=["GET", "HEAD"])
 def opensearch():
